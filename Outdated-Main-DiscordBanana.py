@@ -13,7 +13,7 @@ bot = app_commands.CommandTree(client)
 
 
 # Define the bot's token
-TOKEN = 'MTA0NDgzODg5MTEyNDk1MzEzOA.Gq6ZTu.rg8zV76jaIxNOoGU22RjVsgy3J-rd8F_u9JKMQ'
+TOKEN = ''
 
 # Define a list of banana facts
 banana_facts = [
