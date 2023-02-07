@@ -9,7 +9,6 @@ import asyncio
 from discord.ext import tasks 
 import time
 from datetime import datetime, timedelta
-from discord.utils import find
 
 
 
@@ -23,6 +22,7 @@ from discord.utils import find
 
 
 TOKEN = """
+
 """
 
 banana_facts = [
@@ -57,7 +57,7 @@ banana_facts = [
     "Did you know that the fastest time to eat a banana with no hands is 20.33 seconds? This record was set by Leah Shutkever in the UK.",
     "Did you know that bananas are fucking amazing?"
 ]
-
+        #Plantain Facts used in the Plantain facts command.
 Plantain_Facts = [
     "The term “plantain” is loosely applied to any banana cultivar that is eaten when cooked. However, there is no formal botanical distinction between bananas and plantains.",
     "Ripe plantains can be eaten raw, since the starches are converted to sugars as they ripen.",
@@ -86,6 +86,7 @@ Plantain_Facts = [
     "Plantains are used in the Ivory Coast dish aloco as the main ingredient. Friend plantains are covered in an onion-tomato sauce, often with a grilled fish between the plantains and sauce."
 ]
 
+        #Pear Facts used in the pear facts command.
 Pear_Facts = [
     "Pear belongs to the family of roses. It's the cultivation of pears about 1100 years BC in China.",
     "The scientific name for pear is Pyrus communis.",
@@ -114,6 +115,7 @@ Pear_Facts = [
     "The word pyriform means 'pear-shaped.'"
 ]
 
+        #tomato Facts used in the Tomato facts command.
 Tomato_Facts = [
     "A tomato is a fruit that is considered a vegetable due to its culinary uses and is also considered a vegetable by nutritionists.",
     "The largest tomato on record weighed 10 lb. 12.7 oz. and was grown by Dan Sutherland in Walla Walla, Washington.",
@@ -132,6 +134,7 @@ Tomato_Facts = [
     "An Italian NGO decided to teach Zambians how to grow food and paid locals to grow tomatoes in a fertile valley that lacked agriculture. When the tomatoes grew large and ripe, 200 hippos came out from the river and ate everything."
 ]
 
+        # Monkey Facts used in the monkey facts loop
 Monkey_Facts = [
     "Did you know that monkeys can catch and spread diseases just like humans can?",
     "Monkeys are one of the few species that have the ability to recognize themselves in mirrors.",
@@ -140,29 +143,50 @@ Monkey_Facts = [
     "Monkeys are omnivores and eat both plants and animals for their diet."
 ]
 
+        # Help text, used in the help command
 help_text = '''
-Use "/banana" for a banana fact. 
-Use "/credits" to see who created me. 
-You can also use "/call message:" to display a message on <@953522173157449768> Computer.
-Use "/plantains" to get a plantain fact. 
-Use "/pear" to get a fact about pears! 
-Use "/tomato" to get a fact about tomatos!
+Use `"/banana"` for a banana fact. 
+Use `"/credits"` to see who created me. 
+You can also use `"/call message:"` to display a message on <@953522173157449768> Computer.
+Use `"/plantains"` to get a plantain fact. 
+Use `"/pear"` to get a fact about pears! 
+Use `"/tomato"` to get a fact about tomatos!
+Use `"/time_difference"` to figure out how long ago a specific date was. You can also add a second date and it will calcualte the time difference between those two.
+Use `"/start-stop"` with the arguments: `"start"` or `"stop"`. This will start sending a monkey fact every hour into the channel it was used in.
 
+Enjoy using the bot! P.S. Only you can see this message.
 '''
-
+        
+        # Bug Report and formating for the text file stored locally.
 def Bug_report_txt(guild_name, guild_id, user_display_name,user_id,bug):
     with open("C:/Users/ADMIN/Desktop/Discord-Bot-BugReport/bug_reports.txt", "a",encoding='utf-8') as file:
         file.write(f"""
 
-The following entry has been added by {user_display_name} {user_id} from server {guild_name} {guild_id}  
+#############################################################
+Guild Name: {guild_name}  |  Guild ID: {guild_id}
+User Display Name: {user_display_name}  |  User ID: {user_id}
+------------------------------------------------------------
 
-        {bug} 
+Bug Report: 
+{bug} 
 
-####### End of report for {user_display_name}
+------------------------------------------------------------
+End of Report for {user_display_name}
 
 """)
+    
+        # Sends a DM to me so I know that a new bug has been reported.
+async def sendDm(guild_name, guild_id, user_display_name,user_id,bug,user):
+    await user.send(f"""Hey, a new bug report has been added! 
+UserID= `{user_id}` Display Name= `{user_display_name}`\nGuild ID= `{guild_id}` Guild Name= `{guild_name}`
 
+Their report is as follows:
+ ```
+{bug}
+```
+    """)
 
+        #Checks time based on 1 or two dates. It will use the current date for date2 if not passed to the function.
 def discord_time_check(date1, date2=None):
     formats = ["%Y-%m-%d", "%m/%d/%Y", "%m-%d-%Y", "%Y/%m/%d"]
     date1_obj = None
@@ -195,16 +219,3 @@ def discord_time_check(date1, date2=None):
     days = int((diff.days % 365) % 30)
     
     return "Time difference between " + date1 + " and " + (date2 if date2 is not None else "current date") + " is: " + str(years) + " years, " + str(months) + " months, " + str(days) + " days"
-
-async def sendDm(guild_name, guild_id, user_display_name,user_id,bug,user):
-    await user.send(f"""Hey, a new bug report has been added! 
-UserID= {user_id} Display Name= {user_display_name}\nGuild ID= {guild_id} Guild Name= {guild_name}
-
-Their report is as follows 
- ```
-{bug}
-```
-    """)
-
-
-
