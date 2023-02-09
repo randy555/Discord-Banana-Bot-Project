@@ -154,12 +154,14 @@ Monkey_Facts = [
 help_text = '''
 Use `"/banana"` for a banana fact. 
 Use `"/credits"` to see who created me. 
-You can also use `"/call message:"` to display a message on <@953522173157449768> Computer.
+You can also use `"/call"` to display a message on <@953522173157449768> Computer.
 Use `"/plantains"` to get a plantain fact. 
 Use `"/pear"` to get a fact about pears! 
 Use `"/tomato"` to get a fact about tomatos!
 Use `"/time_difference"` to figure out how long ago a specific date was. You can also add a second date and it will calcualte the time difference between those two.
 Use `"/start-stop"` with the arguments: `"start"` or `"stop"`. This will start sending a monkey fact every hour into the channel it was used in.
+Use `"/time_difference"` to find the difference between the current date and a specific date or two specific dates. You can see the format required when using the command.
+Use `"/Bug_report"` to submit a bug report related to my operation.
 
 Enjoy using the bot! P.S. Only you can see this message.
 '''
