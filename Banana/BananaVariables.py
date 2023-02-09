@@ -4,7 +4,7 @@ from discord import app_commands
 from discord import User
 from threading import Thread
 import winsound
-from tkinter import Tk, Text, INSERT, END
+from tkinter import*
 import asyncio
 from discord.ext import tasks 
 import time
@@ -21,9 +21,11 @@ from datetime import datetime, timedelta
 #
 
 
+            #### Varaibles
 TOKEN = """
 
 """
+
 
 banana_facts = [
     "Bananas are actually berries.",
@@ -55,7 +57,8 @@ banana_facts = [
     "Did you know that the world's largest banana producers are India, China, and Indonesia? In descending order",
     "Did you know that wild bananas grow throughout Southeast Asia, but most are inedible for humans, as they are studded with hard seeds?",
     "Did you know that the fastest time to eat a banana with no hands is 20.33 seconds? This record was set by Leah Shutkever in the UK.",
-    "Did you know that bananas are fucking amazing?"
+    "Did you know that bananas are fucking amazing?",
+    "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
 ]
         #Plantain Facts used in the Plantain facts command.
 Plantain_Facts = [
@@ -83,7 +86,8 @@ Plantain_Facts = [
     "They're packed with magnesium, which is known to increase the release of tryptophan and serotonin in the body, which can help people relax and sleep.",
     "Plantains are high in iron, which is essential for the production of red blood cells.",
     "Plantains are packed with vitamin A, which has been directly linked to improved eye health in numerous studies. Vitamin A functions as an antioxidant in the body, working to reduce oxidative stress in the eyes.",
-    "Plantains are used in the Ivory Coast dish aloco as the main ingredient. Friend plantains are covered in an onion-tomato sauce, often with a grilled fish between the plantains and sauce."
+    "Plantains are used in the Ivory Coast dish aloco as the main ingredient. Friend plantains are covered in an onion-tomato sauce, often with a grilled fish between the plantains and sauce.",
+    "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
 ]
 
         #Pear Facts used in the pear facts command.
@@ -112,7 +116,8 @@ Pear_Facts = [
     "The world's most expensive pear is Buddha-shaped pears which may cost nearly $10 each. They have been cultivated to look exactly like a Buddha statue, even down to the facial details.",
     "The heaviest pear ever grown was about 3 Kg in Japan.",
     "In the Odyssey, Homer called the pear a 'gift from the Gods.'",
-    "The word pyriform means 'pear-shaped.'"
+    "The word pyriform means 'pear-shaped.'",
+    "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
 ]
 
         #tomato Facts used in the Tomato facts command.
@@ -131,7 +136,8 @@ Tomato_Facts = [
     "The gene bred into tomatoes by commercial farmers to give them uniform color had the unintended result of preventing internal sugar reactions that give tomatoes flavor, and has been bred into almost all commercial American tomatoes.",
     "In 2013, a UK company perfected the “TomTato”, a plant that grows potatoes under the soil and tomatoes above.",
     "A Japanese company invented a robot that sits on your back and feeds you tomatoes while you run.",
-    "An Italian NGO decided to teach Zambians how to grow food and paid locals to grow tomatoes in a fertile valley that lacked agriculture. When the tomatoes grew large and ripe, 200 hippos came out from the river and ate everything."
+    "An Italian NGO decided to teach Zambians how to grow food and paid locals to grow tomatoes in a fertile valley that lacked agriculture. When the tomatoes grew large and ripe, 200 hippos came out from the river and ate everything.",
+    "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
 ]
 
         # Monkey Facts used in the monkey facts loop
@@ -140,7 +146,8 @@ Monkey_Facts = [
     "Monkeys are one of the few species that have the ability to recognize themselves in mirrors.",
     "Monkeys are social animals and live in large groups, called troops.",
     "Some species of monkeys can use tools, such as using sticks to get insects out of crevices.",
-    "Monkeys are omnivores and eat both plants and animals for their diet."
+    "Monkeys are omnivores and eat both plants and animals for their diet.",
+    "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
 ]
 
         # Help text, used in the help command
@@ -156,7 +163,13 @@ Use `"/start-stop"` with the arguments: `"start"` or `"stop"`. This will start s
 
 Enjoy using the bot! P.S. Only you can see this message.
 '''
-        
+
+now = datetime.now()
+
+        ####end of variables 
+
+        #### Functions
+
         # Bug Report and formating for the text file stored locally.
 def Bug_report_txt(guild_name, guild_id, user_display_name,user_id,bug):
     with open("C:/Users/ADMIN/Desktop/Discord-Bot-BugReport/bug_reports.txt", "a",encoding='utf-8') as file:
@@ -175,9 +188,14 @@ End of Report for {user_display_name}
 
 """)
     
-        # Sends a DM to me so I know that a new bug has been reported.
-async def sendDm(guild_name, guild_id, user_display_name,user_id,bug,user):
-    await user.send(f"""Hey, a new bug report has been added! 
+        # Sends a DM to me so I know that a new bug has been reported. This section needs to be formated better, i need to be able to use this for more situations. Consdier creating varaibles for each response, will make code prettyish.
+async def sendDm(guild_name, guild_id, user_display_name=None,user_id=None,bug=None,user=None):
+    
+    if user_display_name == None or user_id == None:
+        await user.send(f"I have been added to a new server! `{guild_name} {guild_id}`")
+
+    else:
+        await user.send(f"""Hey, a new bug report has been added! 
 UserID= `{user_id}` Display Name= `{user_display_name}`\nGuild ID= `{guild_id}` Guild Name= `{guild_name}`
 
 Their report is as follows:
@@ -220,6 +238,18 @@ def discord_time_check(date1, date2=None):
     
     return "Time difference between " + date1 + " and " + (date2 if date2 is not None else "current date") + " is: " + str(years) + " years, " + str(months) + " months, " + str(days) + " days"
 
-
-
-
+        # Gets the current time based on the value passed to the function.
+now = datetime.now()        
+def current_time(choice):
+    
+    if choice == 1:
+        return now.strftime("%Y")
+    elif choice == 2:
+        return now.strftime("%m")
+    elif choice == 3:
+        return now.strftime("%d")
+    elif choice == 4:
+        return now.strftime("%H:%M:%S")
+    elif choice == 5:
+        return now.strftime("%m/%d/%Y, %H:%M:%S")
+    

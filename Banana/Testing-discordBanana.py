@@ -17,7 +17,7 @@ bot = app_commands.CommandTree(client)
 task = None
 app = app_commands
 
-####### Command sections
+                    ####### Command sections
 
                     # Help command#
 @bot.command(name="help", description="This command will disply help commands")
@@ -179,20 +179,23 @@ async def bug_report(interaction, bug:str):
 
     await sendDm(guild_name, guild_id, user_display_name,user_id,bug,user)
     await interaction.response.send_message("Bug report received and added to the list. Thank you for helping :) \nP.S. Only you can see this message.",ephemeral=True)    
-###### End of command sections
+                    
+                    ###### End of command sections
 
 
-# Command tree sync
+    # Command tree sync
 @client.event
 async def on_ready():
     print(f'{client.user} has connected to Discord!')
     await bot.sync()
-    print(f"Command tree synced")
+    print(f"Command tree synced at {current_time(5)}")
 
-# On join guild message.
+    # On join guild message.
 @client.event
 async def on_guild_join(guild):
+    user = await client.fetch_user("953522173157449768")    
     general = guild.system_channel
+    
     if general and general.permissions_for(guild.me).send_messages:
         
         await general.send(
@@ -200,10 +203,11 @@ async def on_guild_join(guild):
 Hello {}! Thank you for adding me to your server! 
 If you have any questions please use the "/help" command.
 
-Id like to credit my creator <@953522173157449768>. I would also like to mention, if you notice any bugs or issues with the bot please message my creator and let him know!
+Id like to credit my creator <@953522173157449768>. I would also like to mention, if you notice any bugs or issues with the bot please message my creator and let him know! Or use the `"/bug_report"` command.
 '''
 
 .format(guild.name))
+    await sendDm(guild.name,guild.id,user=user)
 
-#run bot
-client.run(TOKEN)    
+    #run bot
+client.run(TOKEN)
