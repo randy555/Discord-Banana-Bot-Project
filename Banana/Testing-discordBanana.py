@@ -80,23 +80,33 @@ async def Plantain_Fact(interaction):
 async def call(interaction, message1: str):
 
     guild_name, guild_id, user_display_name,user_id = interaction.guild.name, interaction.guild.id, interaction.user.display_name, interaction.user.id
-    
-    print(user_id, user_display_name, "Used the call function in guild", guild_id,guild_name)
+    channel_id = interaction.channel.id
+    print(f"{user_id} used the call function in guild {guild_id}")
     await interaction.response.send_message(f"'{message1}' been displayed on <@953522173157449768> Computer.")
-    thread = Thread(target=_show_window, args=(message1, user_id, user_display_name, guild_name, guild_id))
+
+    thread = Thread(target=_show_window, args=(message1,user_id,user_display_name,guild_name,guild_id,channel_id))
     thread.start()
 
-                    # Window creation for call command.#
-def _show_window(message1: str, user_id: str, user_display_name: str, guild_name = "Error (Probably a dm?)", guild_id = "Error (Probably a dm?)"):
+                    # Window creation for call command. #
+def _show_window(message1: str, user_id: str, user_display_name: str, guild_name, guild_id,channel_id):
     obj = Tk()
     obj.title("BananaBot-Call")
     obj.geometry("900x500")
     wintext = Text(obj)
-    wintext.insert(INSERT, message1)
+    label = ttk.Label(obj, text=f'{user_id} {user_display_name} said:  {message1} ')
+    label.pack(pady=10)
+    text = tk.Text(obj)
+    text.pack(pady=10)
+    button = ttk.Button(obj, text="Send", command=lambda: _send_message(guild_id, channel_id, text.get("1.0", "end"), user_id))
+    button.pack(pady=10)
     wintext.insert(END, f"\n\n\nUserID= {user_id} Display Name= {user_display_name}\nGuild ID= {guild_id} Guild Name= {guild_name}")
     wintext.pack()
     obj.after(100, lambda: winsound.PlaySound("F:/Documents/videos/tennnis_og.wav", winsound.SND_FILENAME))
     obj.mainloop()
+
+def _send_message(guild_id, channel_id, message, user_id):
+    asyncio.run_coroutine_threadsafe(client.get_channel(channel_id).send(f"Randy says: {message}"), client.loop)
+
 
                     # Sends a random fact about a monkey into the chat the command was run in.#
 @bot.command(name='start-stop', description="This will start/stop monkey facts every hour, type 'start' or 'stop'")
@@ -143,15 +153,16 @@ date1='Format YYYY-MM-DD, MM/DD/YYYY, MM-DD-YYYY, or YYYY/MM/DD',
 privacy='Wether you want the message and its contents to be able to be seen by other guild memebers.'
 )
 @app.choices(privacy=[
-    app.Choice(name="True", value="True"),
-    app.Choice(name="False", value="False"),
-    ])
-async def time_difference(interaction, date1:str, date2:str=None, privacy:app.Choice[str]=None):
-    print(privacy)
+    app.Choice(name="True", value="True")
+    ]) # Chooseable value so users do not have to enter True manually.
+async def time_difference(interaction, date1:str, date2:str=None, privacy:str='False'):
+    privacy = app.Choice(name=privacy, value=privacy)
+    # Privacy Check
     if privacy.value == "True":
         await interaction.response.send_message(discord_time_check(date1, date2),ephemeral=True)
     elif privacy.value == "False" or privacy == None:
         await interaction.response.send_message(discord_time_check(date1, date2))
+
 
                     # bug report command!
 @bot.command(
@@ -201,7 +212,7 @@ async def on_guild_join(guild):
         await general.send(
 '''
 Hello {}! Thank you for adding me to your server! 
-If you have any questions please use the "/help" command.
+If you have any questions please use the `"/help"` command.
 
 Id like to credit my creator <@953522173157449768>. I would also like to mention, if you notice any bugs or issues with the bot please message my creator and let him know! Or use the `"/bug_report"` command.
 '''
