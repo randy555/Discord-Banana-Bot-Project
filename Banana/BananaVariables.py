@@ -4,7 +4,9 @@ from discord import app_commands
 from discord import User
 from threading import Thread
 import winsound
+import tkinter as tk
 from tkinter import*
+import tkinter.ttk as ttk
 import asyncio
 from discord.ext import tasks 
 import time
@@ -242,7 +244,7 @@ def discord_time_check(date1, date2=None):
 
         # Gets the current time based on the value passed to the function.
 now = datetime.now()        
-def current_time(choice):
+def current_time(choice=5):
     
     if choice == 1:
         return now.strftime("%Y")
@@ -255,3 +257,4 @@ def current_time(choice):
     elif choice == 5:
         return now.strftime("%m/%d/%Y, %H:%M:%S")
     
+
