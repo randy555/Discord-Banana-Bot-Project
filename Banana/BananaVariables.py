@@ -24,11 +24,18 @@ from datetime import datetime, timedelta
 
 
             #### Varaibles
+intents = discord.Intents.default()
+intents.members = True
+client = discord.Client(intents=intents)
+bot = app_commands.CommandTree(client)
+task = None
+app = app_commands
+now = datetime.now()
 TOKEN = """
-
+MTA0NDgzODg5MTEyNDk1MzEzOA.Gkv3Vn.-9EfsetluK9GbqhLGHB0eLEGc5g-BYXf2LLJQ4
 """
 
-
+#Fact lists
 banana_facts = [
     "Bananas are actually berries.",
     "Bananas are a good source of potassium.",
@@ -154,27 +161,24 @@ Monkey_Facts = [
 
         # Help text, used in the help command
 help_text = '''
-Use `"/banana"` for a banana fact. 
 Use `"/credits"` to see who created me. 
-You can also use `"/call"` to display a message on <@953522173157449768> Computer.
-Use `"/plantains"` to get a plantain fact. 
-Use `"/pear"` to get a fact about pears! 
-Use `"/tomato"` to get a fact about tomatos!
-Use `"/time_difference"` to figure out how long ago a specific date was. You can also add a second date and it will calcualte the time difference between those two.
+Use `"/facts"` to choose a random fact about Bananas, Plantains, Pears, or Tomatos.
+Use `"/call"` to display a message on <@953522173157449768> Computer.
 Use `"/start-stop"` with the arguments: `"start"` or `"stop"`. This will start sending a monkey fact every hour into the channel it was used in.
 Use `"/time_difference"` to find the difference between the current date and a specific date or two specific dates. You can see the format required when using the command.
 Use `"/Bug_report"` to submit a bug report related to my operation.
 
+
 Enjoy using the bot! P.S. Only you can see this message.
 '''
 
-now = datetime.now()
+####end of variables 
 
-        ####end of variables 
 
-        #### Functions
 
-        # Bug Report and formating for the text file stored locally.
+#### Functions
+
+# Bug Report and formating for the text file stored locally.
 def Bug_report_txt(guild_name, guild_id, user_display_name,user_id,bug):
     with open("C:/Users/ADMIN/Desktop/Discord-Bot-BugReport/bug_reports.txt", "a",encoding='utf-8') as file:
         file.write(f"""
@@ -192,7 +196,7 @@ End of Report for {user_display_name}
 
 """)
     
-        # Sends a DM to me so I know that a new bug has been reported. This section needs to be formated better, i need to be able to use this for more situations. Consdier creating varaibles for each response, will make code prettyish.
+# Sends a DM to me so I know that a new bug has been reported. This section needs to be formated better, i need to be able to use this for more situations. Consdier creating varaibles for each response, will make code prettyish.
 async def sendDm(guild_name, guild_id, user_display_name=None,user_id=None,bug=None,user=None):
     
     if user_display_name == None or user_id == None:
@@ -208,7 +212,7 @@ Their report is as follows:
 ```
     """)
 
-        #Checks time based on 1 or two dates. It will use the current date for date2 if not passed to the function.
+#Checks time based on 1 or two dates. It will use the current date for date2 if not passed to the function.
 def discord_time_check(date1, date2=None):
     formats = ["%Y-%m-%d", "%m/%d/%Y", "%m-%d-%Y", "%Y/%m/%d"]
     date1_obj = None
@@ -242,8 +246,7 @@ def discord_time_check(date1, date2=None):
     
     return "Time difference between " + date1 + " and " + (date2 if date2 is not None else "current date") + " is: " + str(years) + " years, " + str(months) + " months, " + str(days) + " days"
 
-        # Gets the current time based on the value passed to the function.
-now = datetime.now()        
+# Gets the current time based on the value passed to the function.        
 def current_time(choice=5):
     
     if choice == 1:
@@ -257,4 +260,27 @@ def current_time(choice=5):
     elif choice == 5:
         return now.strftime("%m/%d/%Y, %H:%M:%S")
     
+#Displays tkinter gui on screen
+def Display():
+    obj = Tk()
+    obj.title("Discord Banana Bot")
+    obj.mainloop()
 
+# Gets a fact from the fact lists
+def get_fact(choice):
+    if choice == "1":
+        choice=banana_facts
+    elif choice == "2":
+        choice = Plantain_Facts
+    elif choice == "3":
+        choice = Pear_Facts
+    elif choice == "4":
+        choice = Tomato_Facts
+    else:
+        return "There was an issue with your selection, please try again."
+
+    Main_Fact = random.choice(choice)
+    Main_Fact_c = Main_Fact
+    if Main_Fact == Main_Fact_c:
+        Main_Fact = random.choice(choice)
+    return Main_Fact
