@@ -92,7 +92,7 @@ Plantain_Facts = [
     "Plantains are packed with potassium, which is known as a powerful vasodilator. Potassium can help in relaxing the tension in your blood vessels and arteries.",
     "Plantains contain high levels of vitamin C, meaning that they help keep your immune system stimulated and producing white blood cells.",
     "Plantains contain high levels of dietary fiber, which can help optimized digestion by stimulating peristaltic motion, improving the nutrient uptake efficiency and balancing the bacterial levels in the gut.",
-    "They're packed with magnesium, which is known to increase the release of tryptophan and serotonin in the body, which can help people relax and sleep.",
+    "Plantains are packed with magnesium, which is known to increase the release of tryptophan and serotonin in the body, which can help people relax and sleep.",
     "Plantains are high in iron, which is essential for the production of red blood cells.",
     "Plantains are packed with vitamin A, which has been directly linked to improved eye health in numerous studies. Vitamin A functions as an antioxidant in the body, working to reduce oxidative stress in the eyes.",
     "Plantains are used in the Ivory Coast dish aloco as the main ingredient. Friend plantains are covered in an onion-tomato sauce, often with a grilled fish between the plantains and sauce.",
@@ -109,12 +109,12 @@ Pear_Facts = [
     "The first pear tree was planted in North America in 1620 in the Massachusetts Bay colony. Presently the USA is one of the largest producers of pears in the world which is mostly grown on the coast, mainly in Oregon and Washington.",
     "The Bartlett is the most popular variety of pear in the United States. It got its American name when a Bostonian named Enoch Bartlett bought a pear orchard and began distributing them as Bartlett pears.",
     "Pear can grow to the height of 40 to 50 feet and has a pyramid-shaped crown. It has oval or heart-shaped green leaves that are alternately arranged.",
-    "Actually, the fruit is harvested green because it continues to ripen after removal from the tree. That it is prevented from being overripe.",
+    "Pears are actually harvested green because it continues to ripen after removal from the tree. That it is prevented from being overripe.",
     "Pears are also known as “butter fruit” because they have a soft, butter-like texture when they are ripe.",
     "Pear starts to produce fruit 4 years after planting. The plant can survive from 10 to 50 years.",
     "Pear is about 5 inches long and weighs about 200 gm. A medium pear has about 75 calories. It can be consumed raw or as a part of fruit salads, cakes, and other desserts.",
     "Doctors recommend pears for babies when they are weaning and being introduced to baby food as pears are a low acid fruit that is unlikely to cause digestion problems in babies and pear allergy is rare.",
-    "The fruit is a good source of minerals such as copper, iron, potassium, manganese, and magnesium as well as B-complex vitamins such as folates, riboflavin, and pyridoxine (vitamin B6).",
+    "Pears are a good source of minerals such as copper, iron, potassium, manganese, and magnesium as well as B-complex vitamins such as folates, riboflavin, and pyridoxine (vitamin B6).",
     "Pears boost the immune system because they contain antioxidants such as vitamin C and copper which fight off free radicals and disease in the body.",
     "Pears are one of the highest-fiber fruits, offering 6 gms per medium-sized fruit, helping you meet 25 Percent of your daily requirement. Most of the fiber in them is a nonsoluble polysaccharide (NSP), which functions as a good bulk laxative in the gut reducing the occurrence of colon polyps and also chances of colon cancer.",
     "Pears contain the natural form of folic acid, folate, and they should be included in a healthy prenatal diet in pregnancy.",
@@ -167,6 +167,7 @@ Use `"/call"` to display a message on <@953522173157449768> Computer.
 Use `"/start-stop"` with the arguments: `"start"` or `"stop"`. This will start sending a monkey fact every hour into the channel it was used in.
 Use `"/time_difference"` to find the difference between the current date and a specific date or two specific dates. You can see the format required when using the command.
 Use `"/Bug_report"` to submit a bug report related to my operation.
+Use `"/recommendation_report"` to submite a recommendation for this bot.
 
 
 Enjoy using the bot! P.S. Only you can see this message.
@@ -179,7 +180,7 @@ Enjoy using the bot! P.S. Only you can see this message.
 #### Functions
 
 # Bug Report and formating for the text file stored locally.
-def Bug_report_txt(guild_name, guild_id, user_display_name,user_id,bug):
+async def Bug_report_txt(guild_name, guild_id, user_display_name,user_id,bug):
     with open("C:/Users/ADMIN/Desktop/Discord-Bot-BugReport/bug_reports.txt", "a",encoding='utf-8') as file:
         file.write(f"""
 
@@ -195,14 +196,31 @@ Bug Report:
 End of Report for {user_display_name}
 
 """)
+    # await sendDm() # Try testing this inside of this file, im not sure if it will work because its not running under the main file where the bot is hosted. If it doesnt work its not really that big of a deal to impliment
+
+
+# Recomendation report template for the file on host computer. I could likely merge this function with sendDm() and Bug_report_txt(). Something for a different day though. 
+def Recommendation_Report_txt(guild_name, guild_id, user_display_name,user_id,recommendation):
+    with open("C:/Users/ADMIN/Desktop/Discord-Bot-BugReport/recommendations.txt", "a",encoding='utf-8') as file:
+        file.write(f"""
+
+#############################################################
+Guild Name: {guild_name}  |  Guild ID: {guild_id}
+User Display Name: {user_display_name}  |  User ID: {user_id}
+------------------------------------------------------------
+
+Recommendation: 
+{recommendation} 
+
+------------------------------------------------------------
+End of Recommendation for {user_display_name}
+
+""")
+    
     
 # Sends a DM to me so I know that a new bug has been reported. This section needs to be formated better, i need to be able to use this for more situations. Consdier creating varaibles for each response, will make code prettyish.
-async def sendDm(guild_name, guild_id, user_display_name=None,user_id=None,bug=None,user=None):
-    
-    if user_display_name == None or user_id == None:
-        await user.send(f"I have been added to a new server! `{guild_name} {guild_id}`")
-
-    else:
+async def sendDm(guild_name, guild_id, user_display_name=None,user_id=None,bug=None,user=None,choice=None):
+    if choice == 1:
         await user.send(f"""Hey, a new bug report has been added! 
 UserID= `{user_id}` Display Name= `{user_display_name}`\nGuild ID= `{guild_id}` Guild Name= `{guild_name}`
 
@@ -211,6 +229,12 @@ Their report is as follows:
 {bug}
 ```
     """)
+    elif choice == 2:
+        await user.send(f"I have been added to a new server! `{guild_name} {guild_id}`")
+    elif choice == 3:
+        await user.send(f"A new recommendation has been added by user {user_display_name} id -> {user_id}")
+
+
 
 #Checks time based on 1 or two dates. It will use the current date for date2 if not passed to the function.
 def discord_time_check(date1, date2=None):
@@ -244,7 +268,7 @@ def discord_time_check(date1, date2=None):
     months = int((diff.days % 365) / 30)
     days = int((diff.days % 365) % 30)
     
-    return "Time difference between " + date1 + " and " + (date2 if date2 is not None else "current date") + " is: " + str(years) + " years, " + str(months) + " months, " + str(days) + " days"
+    return "Time difference between " + date1 + " and " + (date2 if date2 is not None else "current date") + " is about: " + str(years) + " years, " + str(months) + " months, " + str(days) + " days"
 
 # Gets the current time based on the value passed to the function.        
 def current_time(choice=5):

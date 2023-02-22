@@ -171,8 +171,39 @@ async def bug_report(interaction, bug:str):
 
     Bug_report_txt(guild_name, guild_id, user_display_name,user_id, bug)
 
-    await sendDm(guild_name, guild_id, user_display_name,user_id,bug,user)
+    await sendDm(guild_name, guild_id, user_display_name,user_id,bug,user,choice=1)
     await interaction.response.send_message("Bug report received and added to the list. Thank you for helping :) \nP.S. Only you can see this message.",ephemeral=True)    
+
+
+# Recommendation report command
+@bot.command(
+    name ='recommendation_report',
+    description=f'Please use this command if you would like to give a recommendation for Banana Facts :)'
+)
+@app.describe(
+    recommendation='Please type the recommendation here!'
+)
+
+# Gets user info for documentiation about the Recommendation report#
+async def Recomendation_Report(interaction, recommendation:str):
+    user = await client.fetch_user("953522173157449768")
+
+    # Attempts to get guild information, this allows the command to work in DM's
+    try:
+        guild_name, guild_id = interaction.guild.name, interaction.guild.id
+    except:
+        guild_id,guild_name = '`From DMs`','`From DMs`'
+            
+    # User Id and Display for documentation
+    user_display_name,user_id =interaction.user.display_name, interaction.user.id
+
+    Recommendation_Report_txt(guild_name, guild_id, user_display_name,user_id, recommendation)
+
+    await sendDm(guild_name, guild_id, user_display_name,user_id,user=user,choice=3)
+    await interaction.response.send_message("Recommendation report received and added to the list. Thank you for helping :) \nP.S. Only you can see this message.",ephemeral=True)    
+
+
+
 
 ###### End of command sections
 
@@ -200,10 +231,13 @@ Hello {}! Thank you for adding me to your server!
 If you have any questions please use the `"/help"` command.
 
 Id like to credit my creator <@953522173157449768>. I would also like to mention, if you notice any bugs or issues with the bot please message my creator and let him know! Or use the `"/bug_report"` command.
+
+
+
 '''
 
 .format(guild.name))
-    await sendDm(guild.name,guild.id,user=user)
+    await sendDm(guild.name,guild.id,user=user,chocie=2)
 
     #run bot
 client.run(TOKEN)
