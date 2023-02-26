@@ -32,7 +32,7 @@ task = None
 app = app_commands
 now = datetime.now()
 TOKEN = """
-MTA0NDgzODg5MTEyNDk1MzEzOA.GIMKl2.cX1d8T_qLU45jCq5YcRg0K8vpMsdBVmtUDlvLo
+
 """
 
 #Fact lists
