@@ -32,7 +32,7 @@ task = None
 app = app_commands
 now = datetime.now()
 TOKEN = """
-
+MTA0NDgzODg5MTEyNDk1MzEzOA.GIMKl2.cX1d8T_qLU45jCq5YcRg0K8vpMsdBVmtUDlvLo
 """
 
 #Fact lists
@@ -303,6 +303,7 @@ def get_fact(choice):
     else:
         return "There was an issue with your selection, please try again."
 
+# ensures that if the command is run twice, the fact will not be duplicated. This is pretty much a temporary fix as im not sure how to fix it in other ways.
     Main_Fact = random.choice(choice)
     Main_Fact_c = Main_Fact
     if Main_Fact == Main_Fact_c:

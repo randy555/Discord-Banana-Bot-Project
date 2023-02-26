@@ -62,7 +62,7 @@ async def call(interaction, message1: str):
 
     guild_name, guild_id, user_display_name,user_id = interaction.guild.name, interaction.guild.id, interaction.user.display_name, interaction.user.id
     channel_id = interaction.channel.id
-    print(f"{user_id} used the call function in guild {guild_id}")
+    print(f"\n\n{user_id} used the call function in guild {guild_id}\n\n")
     await interaction.response.send_message(f"'{message1}' been displayed on <@953522173157449768> Computer.")
 
     thread = Thread(target=_show_window, args=(message1,user_id,user_display_name,guild_name,guild_id,channel_id))
@@ -201,8 +201,6 @@ async def Recomendation_Report(interaction, recommendation:str):
 
     await sendDm(guild_name, guild_id, user_display_name,user_id,user=user,choice=3)
     await interaction.response.send_message("Recommendation report received and added to the list. Thank you for helping :) \nP.S. Only you can see this message.",ephemeral=True)    
-
-
 
 
 ###### End of command sections
