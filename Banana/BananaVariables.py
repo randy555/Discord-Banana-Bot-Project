@@ -11,6 +11,7 @@ import asyncio
 from discord.ext import tasks 
 import time
 from datetime import datetime, timedelta
+import os
 
 
 
@@ -31,9 +32,14 @@ bot = app_commands.CommandTree(client)
 task = None
 app = app_commands
 now = datetime.now()
-TOKEN = """
+cwd = os.getcwd() # This isnt needed anymore but im going to leave it for now.
+os.chdir('C:/Users/ADMIN/AppData/Local/Programs/Python/Python310/Lib/site-packages/Banana')
 
-"""
+
+#Open token file, this way the token is not inside of the code anymore.
+with open('token.txt','r')as file:
+    TOKEN= file.read()
+    
 
 #Fact lists
 banana_facts = [
@@ -56,7 +62,7 @@ banana_facts = [
     "Did you know that bananas that are exported are picked green and ripened at the destination country?",
     "Did you know that bananas have 19 grams of sugar, 450 Mg of potassium, 1 gram of protein, and 30 grams of Carbs?",
     "Did you know that moderate consumption of bananas could protect against kidney cancer?",
-    "Did you know that commercial bananas have been bred to contain three sets of genes so they don't produce mature seeds and are therefore sterile.",
+    "Did you know that commercial bananas have been bred to contain three sets of genes so they don't produce mature seeds and are therefore sterile?",
     "Did you know that banana peels are edible and actually extremely nutritious? They contain high amounts of B6, B12, Magnesium, and potassium!",
     "DID YOU KNOW THAT BANANAS ARE CONSIDERED BERRIES?",
     "Did you know that a bunch of bananas is called a hand?",
@@ -67,6 +73,16 @@ banana_facts = [
     "Did you know that wild bananas grow throughout Southeast Asia, but most are inedible for humans, as they are studded with hard seeds?",
     "Did you know that the fastest time to eat a banana with no hands is 20.33 seconds? This record was set by Leah Shutkever in the UK.",
     "Did you know that bananas are fucking amazing?",
+        '''
+It would take about 545,454 bananas to power a 300 watt computer.
+
+A medium-sized banana contains approximately 105 calories or 440 joules of energy. However, not all of this energy can be converted into electricity, and the conversion process is not very efficient. 
+For the sake of estimation, let's assume that we can convert 10 percent of the energy in a banana into electrical energy. This means that one banana would contain approximately 44 joules of electrical energy.
+
+Number of bananas = Total energy required / Energy per banana
+Number of bananas = 2400 Wh / (44 J x 10%)
+Number of bananas = 545,454 bananas
+    ''',
     "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
 ]
         #Plantain Facts used in the Plantain facts command.
